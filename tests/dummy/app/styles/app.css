@@ -367,3 +367,7 @@ codewindow {
 .bordered-box {
     border: 5px green solid;
 }
+
+strikethrough {
+    text-decoration: line-through;
+}

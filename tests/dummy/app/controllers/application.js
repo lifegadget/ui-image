@@ -6,7 +6,7 @@ export default Ember.Controller.extend({
 
   queryParams: ['imageSrc', 'borderMask', 'frameSize', 'sizePreset'],
 
-  imageSrc: '/images/jobs.png',
+  imageSrc: '/images/actress.png',
   imageChoices: [
     { id:'/images/jobs.png', name: 'Steve Jobs' },
     { id:'/images/actress.png', name: 'Actress' },

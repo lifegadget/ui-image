@@ -1,6 +1,6 @@
 {
   "name": "ui-image",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A simple image wrapper with sugar sprinkled on top",
   "directories": {
     "doc": "doc",

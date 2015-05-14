@@ -8,13 +8,24 @@ export default Ember.Component.extend({
   layout: layout,
   tagName: 'img',
   classNames: ['ui-image'],
-  classNameBindings: ['_borderMask','_size', 'explicit:explicit-dimensions'],
+  classNameBindings: ['_borderMask','_size', 'explicit:explicit-dimensions', '_clip', '_clipHover'],
   attributeBindings: ['src','_style:style'],
   
   borderMask: null,
   _borderMask: on('didInsertElement', computed('borderMask', function() {
     return this.get('borderMask');
   })),
+  clip: null,
+  _clip: on('init', computed('clip', function() {
+    let clip = this.get('clip');
+    return clip ? `clip-${clip}` : '';
+  })),
+  clipHover: null,
+  _clipHover: on('init', computed('clipHover', function() {
+    let clip = this.get('clipHover');
+    return clip ? `clip-hover-${clip}` : '';
+  })),
+  
   size: null,
   _size: on('didInsertElement', computed('size', function() {
     const reflect = new A(['fill','tiny','small','default','large','huge','portrait','portrait-big']);
@@ -39,7 +50,6 @@ export default Ember.Component.extend({
       this.notifyPropertyChange('style');
       return ''; // no CSS class, size handled through style attribute      
     }
-    
   })),
   width: null,
   _width: on('init', observer('width', function() {

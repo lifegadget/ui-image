@@ -65,8 +65,8 @@
       <div class="flex-item">
         <p>&nbsp;</p>
         <desc>
-          In many cases the image we're showing will be more of an photographic icon for an application. In this state 
-          it's going to be relatively small(ish). How do we shrink such a legend as Steve Jobs? Well the easiest way is
+          In many cases the image we're showing will be more of an photographic <em>icon</em> for an application. In this state 
+          it's going to be relatively small(ish). How do we shrink it down? Well the easiest way is
           just to take only that space which is provided by the containing element. 
         </desc>
         <desc>
@@ -148,38 +148,25 @@
   <examples class="flexy">
     <columns>
       <column style="margin: 15px">
-      {{#if useSize}}
-        {{ui-image src=imageSrc borderMask=borderMask size=explicitSize}}             
-      {{else}}
-        {{ui-image src=imageSrc borderMask=borderMask width=explicitWidth height=explicitHeight}}
-      {{/if}}
+        {{ui-image src=imageSrc borderMask=borderMask size='100%' clip=clip clipHover=clip}}             
     </column>
     <column>
       <p>&nbsp;</p>
       <desc>
-        For the control freaks out there -- we know you're out there -- you can of course just STATE what height and width you'd like.
-        Raw numbers are converted to 'px' measurements but you can state whatever units you prefer. The only choice is which property/properties you'll
-        set. It's a big world but you're a big person ... go ahead and choose between:
+        This is just a first pass at supporting clipping paths. The idea would be to add a few more defaults and then allow easy inline SVG
+        to be added too. For now enjoy the only example I have so far.
       </desc>
       <desc>
-        {{#if useSize}}
-          Size: {{text-input value=explicitSize width='70px'}}         
-        {{else}}
-          Width: {{text-input value=explicitWidth width='70px'}} 
-          Height: {{text-input value=explicitHeight width='70px'}}          
-        {{/if}}
-        &nbsp;&nbsp;
-        {{ui-toggle-button value=useSize on="use width and height properties" off="use size property instead"}}
+          Clipping: {{ui-bs-button-choice choices='pow,cross,left,right' selected=clip}}       
       </desc>
       <desc>
-        To ease your troubled heart, let me explain that setting 'size' sets BOTH height and width properties at the same time. All three properties 
-        use the values you provide to set the "style" attribute (using Ember's <code>htmlSafe()</code> of course).
+        Of course clipping is not a universal browser sport so best to stay <strikethrough>safe</strikethrough> informed: <a href="http://caniuse.com/#feat=css-clip-path">caniuse</a>.
       </desc>
       <codewindow>
         \{{<strong>ui-image</strong>&nbsp;
           img='{{imageSrc}}'  
           {{#if useSize}} size='{{explicitSize}}'
-        {{/if}}{{#if borderMask}}borderMask='{{borderMask}}'{{/if}} 
+        {{/if}}clip='{{clip}}' clipHover='{{clip}}'
       }}
       </codewindow>
     </column>

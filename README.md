@@ -11,7 +11,7 @@
 - Earlier CLI versions
     ````bash
     npm install ui-image --save-dev
-    ember g ui-input
+    ember g ui-image
     ````
 
 ## Usage ##
