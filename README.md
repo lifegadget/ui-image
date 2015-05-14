@@ -17,7 +17,7 @@
 ## Usage ##
 For more details on the syntax check out the interactive demo:
 
-> [ui-icon demo and examples](http://development.ui-image.divshot.io)
+> [online demo](http://development.ui-image.divshot.io)
 
 ## Version Compatibility
 
