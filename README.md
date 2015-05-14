@@ -1,23 +1,23 @@
-# ui-input ![ ](https://travis-ci.org/lifegadget/ui-icon.svg) [![npm version](https://badge.fury.io/js/ui-icon.svg)](http://badge.fury.io/js/ui-icon)
+# ui-image ![ ](https://travis-ci.org/lifegadget/ui-image.svg) [![npm version](https://badge.fury.io/js/ui-image.svg)](http://badge.fury.io/js/ui-image)
 > Input controls for ambitious Ember applications.
 
 ## Install ##
 
 - Ember-CLI versions 0.2.3+
     ````bash
-    ember install ui-icon
+    ember install ui-image
     ````
 
 - Earlier CLI versions
     ````bash
-    npm install ui-icon --save-dev
+    npm install ui-image --save-dev
     ember g ui-input
     ````
 
 ## Usage ##
 For more details on the syntax check out the interactive demo:
 
-> [ui-icon demo and examples](http://development.ui-icon.divshot.io)
+> [ui-icon demo and examples](http://development.ui-image.divshot.io)
 
 ## Version Compatibility
 
