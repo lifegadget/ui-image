@@ -1,3 +1,195 @@
-<h2 id="title">Welcome to Ember.js</h2>
+<div class="container">
+  <h1 id="title">ui-image</h1>
+  <h2>A simple image wrapper with sugar sprinkled on top</h2>
 
-{{outlet}}
+  <ul>
+    <li><a href="https://github.com/lifegadget/ui-image">GitHub Repo</a></li>
+    <li><a href="tests?nocontainer">Unit tests</a></li>
+  </ul>      
+
+
+  <h3>Basic Example</h3>
+  <examples class="flexy">
+    <div class="flex-item" style="width:100%">
+      {{ui-image src=imageSrc borderMask=borderMask}}
+      <p>&nbsp;</p>
+    </div>
+    <div class="flex-item">
+      <p>&nbsp;</p>
+      <desc>
+        This picture is shown with some basic adjustments involving the application of css class manipulation. 
+        The CSS is self-contained here but borrows from Bootstrap where possible (hell, I'm not a designer, don't 
+        ya know). 
+      </desc>
+      <desc>
+        Image Choice: {{ui-bs-button-choice choices=imageChoices selected=imageSrc}}
+      </desc>
+      <desc>
+        Simple Border Masking: {{ui-bs-button-choice choices=borderMasks selected=borderMask}}
+      </desc>
+      <codewindow>
+        \{{<strong>ui-image</strong>&nbsp;img='{{imageSrc}}' {{#if borderMask}}borderMask='{{borderMask}}'{{/if}} }}
+        </codewindow>
+      </div>
+    </examples>
+    <desc>
+      It's worth noting that while we've largely left the topic of "sizing" out of the conversation, the base ui-image CSS
+      class does constrain the <code>max-width:</code> CSS selector to <strong>100%</strong> so the images dimensions are 
+      less obviously different between the two images. This isn't a solution, just a side note.
+    </desc>
+    <desc>
+      Also note that changing the image here effects all examples and you may want to try variations. Steve and the actress 
+      happen to be square images whereas the Michele Obama image is rectangular (which can matter ... not just showing off my 
+      mastery of geometry).
+    </desc>
+    <p>&nbsp;</p>
+      
+    <h3>Sizing Example 1 - Fill</h3>
+    <div class="col-xs-12 col-md-6">
+      <div class="text-centered" style="width:100%">
+        <div class="flex-item bordered-box" style="width:{{frameSize}}px;">
+          {{ui-image src=imageSrc borderMask=borderMask size='fill'}}
+        </div>
+        <p>&nbsp;</p>
+      </div>        
+    </div>
+    <div class="col-xs-12 col-md-6">
+      <div class="text-centered" style="width:100%">
+        <div class="flex-item bordered-box" style="width:{{frameSize}}px;border-color:red">
+          {{ui-image src=imageSrc borderMask=borderMask }}
+        </div>
+      </div>        
+    </div>
+
+    <examples class="col-xs-12">
+      <div class="flex-item">
+        <p>&nbsp;</p>
+        <desc>
+          In many cases the image we're showing will be more of an photographic icon for an application. In this state 
+          it's going to be relatively small(ish). How do we shrink such a legend as Steve Jobs? Well the easiest way is
+          just to take only that space which is provided by the containing element. 
+        </desc>
+        <desc>
+          Frame Size: 
+          <div class="col-xs-11">
+            {{input type='range' min=25 max=400 step=25 value=frameSize}}              
+          </div>
+          <div class="col-xs-1">
+            {{number-input width='50px' height='height' value=frameSize}}
+          </div>
+        </desc>
+        <desc>
+          All we're really doing here is changing the CSS selector from <code>max-width: 100%</code> to <code>width: 100%</code>.
+          This just means that if we move to a slightly larger size than the image it will continue to scale it up to the size available.
+          If that's ok then use the 'fill' option. If you leave it off it will stop scaling once it reaches it's full size. 
+            
+          <note>
+            <strong>Note:</strong> 
+            The green image has <strong>fill</strong> set, the red bordered image does NOT. Scale up to see variation.
+          </note>
+        </desc>
+        <codewindow>
+          \{{<strong>ui-image</strong>&nbsp;
+            img='/images/jobs.png' {{#if borderMask}}borderMask='{{borderMask}}'{{/if}} 
+            size='fill'}}
+          </codewindow>
+        </div>
+      </examples>
+      
+      <p>&nbsp;</p>
+      <h3 class="col-xs-12">Sizing Example 2 - Preset Sizes</h3>
+       
+      <examples class="flexy">
+        <columns>
+        <column style="margin: 15px">
+        {{ui-image src=imageSrc borderMask=borderMask size=magicSizePreset}}      
+      </column>
+      <column>
+      <p>&nbsp;</p>
+      <desc>
+        Another option is to state a specific size from a set of standardized presets. The first batch you'll see below match up with 
+        Bootstrap nominclature (largely) as well as our own <code><a href="http://development.ui-icon.divshot.io/">ui-icon</a></code>, 
+        <code><a href="http://development.ui-button.divshot.io/">ui-button</a></code>, and 
+        <code><a href="http://development.ui-input.divshot.io/">ui-input</a></code> addons. They say consistency 
+        is the hobgoblin of simple minds but what do they know ... hum de dum. What was I saying? 
+      </desc>
+      <desc>
+        Just kidding. The Emerson quote really said "<em>foolish</em> consistency" and there's nothing foolish about being consistent in UI controls.
+        I say that just in time to make a small departure from consistency and into "extension" ... yes because images are sometimes used as "icons" 
+        the prior consistency was appropriate but sometimes we want images to be proper "images" which means they ought to be bigger. Right? Well we 
+        thought we'd add two larger "standard sizes" as you'll see below.
+      </desc>
+      <p>&nbsp;</p>
+      <desc>
+        Sizes: {{ui-bs-button-choice choices=sizePresets selected=sizePreset}}
+      </desc>
+      <desc>
+        Here you're going to want to switching to the Michelle Obama image. Oh no! She's pinched! Yes, that's because we're forcing both width
+        and height to same sizes. That kinda makes sense for "icon" images to give them a very uniform look and feel. Come on Obama looks pretty 
+        good pinched at these smaller sizes, right? Right. But for portrait and above it can get awkward. One might think someone with poor photoshop
+        skills was trying to make Michelle thinner (not that she needs it ... she look great from this authors perspective).
+      </desc>
+      <desc>
+        So what are we going to do about this? Well if you'd like to release the square constraint just add a ".unconstrained" to the <code>size</code> 
+        property and you're all set.
+        <p>&nbsp;</p>
+        {{ui-toggle-button icon='chevron-right' on='unconstrain me' off='square me' value=squareConstraint}}
+      </desc>
+      <codewindow>
+        \{{<strong>ui-image</strong>&nbsp;img='{{imageSrc}}' size='{{magicSizePreset}}' {{#if borderMask}}borderMask='{{borderMask}}'{{/if}} }}
+        </codewindow>
+      </column>
+    </columns>
+  </examples>
+ 
+  <p>&nbsp;</p>
+  <h3 class="col-xs-12">Clipping</h3>
+  
+  <examples class="flexy">
+    <columns>
+      <column style="margin: 15px">
+      {{#if useSize}}
+        {{ui-image src=imageSrc borderMask=borderMask size=explicitSize}}             
+      {{else}}
+        {{ui-image src=imageSrc borderMask=borderMask width=explicitWidth height=explicitHeight}}
+      {{/if}}
+    </column>
+    <column>
+      <p>&nbsp;</p>
+      <desc>
+        For the control freaks out there -- we know you're out there -- you can of course just STATE what height and width you'd like.
+        Raw numbers are converted to 'px' measurements but you can state whatever units you prefer. The only choice is which property/properties you'll
+        set. It's a big world but you're a big person ... go ahead and choose between:
+      </desc>
+      <desc>
+        {{#if useSize}}
+          Size: {{text-input value=explicitSize width='70px'}}         
+        {{else}}
+          Width: {{text-input value=explicitWidth width='70px'}} 
+          Height: {{text-input value=explicitHeight width='70px'}}          
+        {{/if}}
+        &nbsp;&nbsp;
+        {{ui-toggle-button value=useSize on="use width and height properties" off="use size property instead"}}
+      </desc>
+      <desc>
+        To ease your troubled heart, let me explain that setting 'size' sets BOTH height and width properties at the same time. All three properties 
+        use the values you provide to set the "style" attribute (using Ember's <code>htmlSafe()</code> of course).
+      </desc>
+      <codewindow>
+        \{{<strong>ui-image</strong>&nbsp;
+          img='{{imageSrc}}'  
+          {{#if useSize}} size='{{explicitSize}}'
+        {{/if}}{{#if borderMask}}borderMask='{{borderMask}}'{{/if}} 
+      }}
+      </codewindow>
+    </column>
+  </columns>
+</examples>
+      
+      
+      
+      
+</div>
+
+
+      

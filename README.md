@@ -1,25 +1,56 @@
-# Ui-image
+# ui-input ![ ](https://travis-ci.org/lifegadget/ui-icon.svg) [![npm version](https://badge.fury.io/js/ui-icon.svg)](http://badge.fury.io/js/ui-icon)
+> Input controls for ambitious Ember applications.
 
-This README outlines the details of collaborating on this Ember addon.
+## Install ##
 
-## Installation
+- Ember-CLI versions 0.2.3+
+    ````bash
+    ember install ui-icon
+    ````
 
-* `git clone` this repository
-* `npm install`
-* `bower install`
+- Earlier CLI versions
+    ````bash
+    npm install ui-icon --save-dev
+    ember g ui-input
+    ````
 
-## Running
+## Usage ##
+For more details on the syntax check out the interactive demo:
 
-* `ember server`
-* Visit your app at http://localhost:4200.
+> [ui-icon demo and examples](http://development.ui-icon.divshot.io)
 
-## Running Tests
+## Version Compatibility
 
-* `ember test`
-* `ember test --server`
+This may very well work with older version of Ember and Ember-CLI but it was intended for:
 
-## Building
+- Ember 1.11.0+
+- Ember-CLI 0.2.3+
 
-* `ember build`
+## Repo Contribution
 
-For more information on using ember-cli, visit [http://www.ember-cli.com/](http://www.ember-cli.com/).
+We're open to your creative suggestions but please move past the "idea" stage 
+and send us a PR so we can incorporate your ideas without killing ourselves. :)
+
+## Licensing
+
+This component is free to use under the MIT license:
+
+Copyright (c) 2015 LifeGadget Ltd
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

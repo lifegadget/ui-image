@@ -1,0 +1,87 @@
+.ui-image {
+    display: inline-block;
+    max-width: 100%;
+}
+.ui-image.explicit-dimensions {
+    max-width: initial;
+}
+.ui-image.fill {
+    width: 100%;
+    max-width: inherit;
+}
+.ui-image.tiny {
+    width: 25px;
+    height: 25px;
+    max-width: inherit;
+}
+.ui-image.tiny.unconstrained {
+    height: initial;
+}
+.ui-image.small {
+    width: 35px;
+    height: 35px;
+    max-width: inherit;
+}
+.ui-image.small.unconstrained {
+    height: initial;
+}
+.ui-image.default {
+    width: 50px;
+    height: 50px;
+    max-width: inherit;
+}
+.ui-image.default.unconstrained {
+    height: initial;
+}
+.ui-image.large {
+    width: 75px;
+    height: 75px;
+    max-width: inherit;
+}
+.ui-image.large.unconstrained {
+    height: initial;
+}
+.ui-image.huge {
+    width: 100px;
+    height: 100px;
+    max-width: inherit;
+}
+.ui-image.huge.unconstrained {
+    height: initial;
+}
+.ui-image.portrait {
+    width: 250px;
+    height: 250px;
+}
+.ui-image.portrait.unconstrained {
+    height: initial;
+}
+.ui-image.portrait-big {
+    width: 500px;
+    height: 500px;
+    max-width: inherit;
+}
+.ui-image.portrait-big.unconstrained {
+    height: initial;
+}
+
+.ui-image.circle {
+    border-radius: 50%;
+}
+.ui-image.rounded {
+    border-radius: 6px;
+}
+.ui-image.thumbnail {
+    padding: 4px;
+    line-height: 1.42857143;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+.ui-image.circular-thumbnail {
+    padding: 4px;
+    line-height: 1.42857143;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+}
