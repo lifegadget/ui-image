@@ -1,6 +1,6 @@
 {
   "name": "ui-image",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A simple image wrapper with sugar sprinkled on top",
   "directories": {
     "doc": "doc",
@@ -16,6 +16,19 @@
     "node": ">= 0.10.0"
   },
   "main": "index.js",
+  "files": [
+    "Brocfile.js",
+    "LICENSE.md",
+    "README.md",
+    "addon",
+    "app",
+    "bower.json",
+    "config",
+    "index.js",
+    "package.json",
+    "testem.json",
+    "vendor"
+  ],
   "author": "Ken Snyder <ken@ken.net>",
   "license": "MIT",
   "devDependencies": {

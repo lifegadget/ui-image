@@ -5,8 +5,7 @@
   <ul>
     <li><a href="https://github.com/lifegadget/ui-image">GitHub Repo</a></li>
     <li><a href="tests?nocontainer">Unit tests</a></li>
-  </ul>      
-
+  </ul>
 
   <h3>Basic Example</h3>
   <examples class="flexy">
@@ -28,7 +27,7 @@
         Simple Border Masking: {{ui-bs-button-choice choices=borderMasks selected=borderMask}}
       </desc>
       <codewindow>
-        \{{<strong>ui-image</strong>&nbsp;img='{{imageSrc}}' {{#if borderMask}}borderMask='{{borderMask}}'{{/if}} }}
+        \{{<strong>ui-image</strong>&nbsp;src='{{imageSrc}}' {{#if borderMask}}borderMask='{{borderMask}}'{{/if}} }}
         </codewindow>
       </div>
     </examples>
@@ -136,7 +135,7 @@
         {{ui-toggle-button icon='chevron-right' on='unconstrain me' off='square me' value=squareConstraint}}
       </desc>
       <codewindow>
-        \{{<strong>ui-image</strong>&nbsp;img='{{imageSrc}}' size='{{magicSizePreset}}' {{#if borderMask}}borderMask='{{borderMask}}'{{/if}} }}
+        \{{<strong>ui-image</strong>&nbsp;src='{{imageSrc}}' size='{{magicSizePreset}}' {{#if borderMask}}borderMask='{{borderMask}}'{{/if}} }}
         </codewindow>
       </column>
     </columns>
@@ -157,14 +156,14 @@
         to be added too. For now enjoy the only example I have so far.
       </desc>
       <desc>
-          Clipping: {{ui-bs-button-choice choices='pow,cross,left,right' selected=clip}}       
+          Clipping: {{ui-bs-button-choice choices='pow,cross,left,right,star' selected=clip}}       
       </desc>
       <desc>
         Of course clipping is not a universal browser sport so best to stay <strikethrough>safe</strikethrough> informed: <a href="http://caniuse.com/#feat=css-clip-path">caniuse</a>.
       </desc>
       <codewindow>
         \{{<strong>ui-image</strong>&nbsp;
-          img='{{imageSrc}}'  
+          src='{{imageSrc}}'  
           {{#if useSize}} size='{{explicitSize}}'
         {{/if}}clip='{{clip}}' clipHover='{{clip}}'
       }}
@@ -172,7 +171,6 @@
     </column>
   </columns>
 </examples>
-      
       
       
       

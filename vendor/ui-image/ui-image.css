@@ -117,4 +117,13 @@
     clip-path: polygon(85% 0, 100% 50%, 84% 99%, 0% 100%, 12% 50%, 0% 0%);
 }
 
+.ui-image.clip-star {
+    transition: 1s cubic-bezier(1, -1, 0, 2);
+    clip-path: polygon(50% 0%, 63% 38%, 100% 38%, 69% 59%, 82% 100%, 50% 75%, 18% 100%, 31% 59%, 0% 38%, 37% 38%);
+}
+.ui-image.clip-hover-star:hover {
+    clip-path: polygon(50% 0%, 70% 26%, 100% 38%, 80% 64%, 82% 100%, 49% 88%, 18% 100%, 20% 63%, 0% 38%, 29% 26%);
+}
+
+
 
