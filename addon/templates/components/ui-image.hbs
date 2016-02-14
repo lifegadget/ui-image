@@ -1,1 +1,10 @@
+<img
+  id="img-{{elementId}}"
+  src={{_src}}
+  class="ui-image {{class}}{{if _fromCache ' local-cache'}}{{if (not-eq _aspect naturalAspect) ' aspect-adjusted'}} {{_orientation}}"
+  style={{stylist}}
+>
+{{#if _initialSrc}}
+  <img src={{_background}} data-replace="img-{{elementId}}" style="display:none" onload={{action 'loadedBackgroundImage'}}>
+{{/if}}
 {{yield}}

@@ -1,102 +1,151 @@
 import Ember from 'ember';
-const { computed, observer, $, A, run, on, typeOf, debug, keys } = Ember;    // jshint ignore:line
-const htmlSafe = Ember.String.htmlSafe;
-
+import SharedStylist from 'ember-cli-stylist/mixins/shared-stylist';
+const { keys, create } = Object; // jshint ignore:line
+const { RSVP: {Promise, all, race, resolve, defer} } = Ember; // jshint ignore:line
+const { inject: {service} } = Ember; // jshint ignore:line
+const { computed, observer, $, run, on, typeOf, isPresent } = Ember;  // jshint ignore:line
+const { defineProperty, get, set, inject, isEmpty, merge } = Ember; // jshint ignore:line
+const a = Ember.A; // jshint ignore:line
 import layout from '../templates/components/ui-image';
+window.Storage.prototype.setObject = function(key, value) {
+  this.setItem(key, JSON.stringify(value));
+};
 
-export default Ember.Component.extend({
+window.Storage.prototype.getObject = function(key) {
+    var value = this.getItem(key);
+    return value && JSON.parse(value);
+};
+const styleBindings = [
+  'height', 'width', 'maxWidth', 'minWidth', 'maxHeight',
+  'minHeight', 'borderRadius', 'backgroundColor', 'objectFit', 'objectPosition'
+];
+
+const uiImage = Ember.Component.extend(SharedStylist, {
   layout: layout,
-  tagName: 'img',
-  classNames: ['ui-image'],
-  classNameBindings: ['_borderMask','_size', 'explicit:explicit-dimensions', '_clip', '_clipHover'],
-  attributeBindings: ['src','_style:style'],
-  
-  borderMask: null,
-  _borderMask: on('didInsertElement', computed('borderMask', function() {
-    return this.get('borderMask');
-  })),
-  clip: null,
-  _clip: on('init', computed('clip', function() {
-    let clip = this.get('clip');
-    return clip ? `clip-${clip}` : '';
-  })),
-  clipHover: null,
-  _clipHover: on('init', computed('clipHover', function() {
-    let clip = this.get('clipHover');
-    return clip ? `clip-hover-${clip}` : '';
-  })),
-  
-  size: null,
-  _size: on('didInsertElement', computed('size', function() {
-    const reflect = new A(['fill','tiny','small','default','large','huge','portrait','portrait-big']);
-    let size = this.get('size');
-    let style = this.get('style');
-    const isUnconstrained = size && String(size).indexOf('.unconstrained') !== -1;
-    this.set('explicit',false);
-    
-    if(isUnconstrained) {
-      return size.split('.').join(' ');
-    }    
-    if(reflect.contains(size)) {
-      style.width = null;
-      style.height = null;
-      this.notifyPropertyChange('style');
-      return size;
-    } else {
-      this.set('explicit',true);
-      size = isNaN(Number(size)) ? size : `${size}px`;
-      style.width = size;
-      style.height = size;
-      this.notifyPropertyChange('style');
-      return ''; // no CSS class, size handled through style attribute      
-    }
-  })),
-  width: null,
-  _width: on('init', observer('width', function() {
-    run.next( () => {
-      this.setDimensions('width');      
-    });
-  })),
-  height: null,
-  _height: on('init', observer('height', function() {
-    run.next( () => {
-      this.setDimensions('height');      
-    });
-  })),
-  setDimensions: function(prop) {
-    const value = this.get(prop);
-    let style = this.get('style');
-    if(!value) {
-      style[prop]=null;
-      this.set('explicit',false);
-    } else {
-      style[prop] = isNaN(Number(value)) ? value : `${value}px`; 
-      this.set('explicit',true);
-      this.notifyPropertyChange('style');
-    }
-    return style[prop];
+  tagName: '',
+  init(...args) {
+    this._super(args);
+    this.fetchImage();
   },
-  style: {},
-  _style: on('didInsertElement', computed('style', function() {
-    const style = this.get('style');
-    const styleAttrs = keys(style);
-    let styleProps = [];
-    for( let i in styleAttrs ) {
-      const property = styleAttrs[i];
-      const propertyValue = style[property];
-      if(propertyValue) {
-        styleProps.push(`${styleAttrs[i]}: ${propertyValue}`);
-      } else {
-        delete styleProps[i];
-      }
+  srcObserver: observer('src', function() {
+    this.fetchImage();
+  }),
+
+  aspect: null,
+  _aspect: computed('aspect', function() {
+    const aspect = this.get('aspect');
+    const defaultAspect = 3 / 2;
+
+    return isNaN(aspect) ? aspect.split(':')[0] / aspect.split(':')[1] : aspect ? aspect : defaultAspect;
+  }),
+  naturalAspect: computed('naturalWidth', 'naturalHeight', function() {
+    const {naturalWidth, naturalHeight} = this.getProperties('naturalWidth', 'naturalHeight');
+    if(naturalWidth && naturalHeight) {
+      return Math.floor(naturalWidth / naturalHeight * 1000) / 1000;
     }
-    return htmlSafe(styleProps.join('; '));
-  })),
-  
-  // dont want the default behaviours getting in the way of these properties
-  _propertyRemapping: on('init', function() {
-    new A(this.get('attributeBindings')).removeObject('size');
-    new A(this.get('attributeBindings')).removeObject('height');
-    new A(this.get('attributeBindings')).removeObject('width');
-  })  
+  }),
+  display: null,
+  objectFit: computed('display', function() {
+    switch (this.get('display')) {
+    case 'cover':
+    case 'contain':
+      return this.get('display');
+    case 'clip':
+      return 'none';
+    default:
+      return null;
+    }
+  }),
+  _orientation: computed('_aspect', function() {
+    return this.get('_aspect') > 1 ? 'landscape' : 'portrait';
+  }),
+  useLowRes: false, // allow config to choose initial image
+  useCache: false, // cache using localStorage
+  ttl: '14 days',
+  lowResPrefix: '',
+  lowResPostfix: '_init',
+  styleBindings: styleBindings,
+  initialSrc: null, // explicitly state initial image
+  _initialSrc: computed('initialSrc', 'useLowRes', 'src', function() {
+    const {useLowRes, lowResPostfix, lowResPrefix, initialSrc} = this.getProperties('useLowRes', 'lowResPostfix', 'lowResPrefix', 'useLowRes');
+    let src = this.get('src');
+    if (initialSrc) { return initialSrc; }
+
+    if(src) {
+      const [, filename, extension] = src.match(/(.*)(\..+)/);
+      return useLowRes ? `${lowResPrefix}${filename}${lowResPostfix}${extension}` : null;
+    } else {
+      return '';
+    }
+  }),
+  breakpoints: null,
+  backgroundColor: '#eeeeee',
+  background: computed.alias('backgroundColor'),
+  width: computed('elementId', 'display', 'naturalAspect', {
+    set(_, value) {
+      return value;
+    },
+    get() {
+      const imageDom = `#img-${this.elementId}`;
+      const $parent = window.$(imageDom).parent();
+      const width = $parent.innerWidth();
+
+      this.set('paddingLeft', null);
+      this.set('paddingRight', null);
+      return Math.floor(width * 10) / 10;
+    }
+  }),
+  height: computed('elementId',{
+    set(_, value) {
+      return value;
+    },
+    get() {
+      const imageDom = `#img-${this.elementId}`;
+      const $parent = window.$(imageDom).parent();
+      const width = $parent.width();
+      const aspect = this.get('_aspect');
+      return Math.floor(width * (1 / aspect) * 10) / 10;
+    }
+  }),
+  borderRadius: null,
+  _mask: observer('mask', function()  {
+    this.set('borderRadius', null);
+    switch(this.get('mask')) {
+    case 'circle':
+      this.set('borderRadius', '50%');
+      return;
+    case 'rounded':
+      this.set('borderRadius', '1em');
+      return;
+    case 'pow':
+      this.set('clipPath', 'pow');
+      return
+    }
+  }),
+  _delaySecondImage: 1500,
+  fetchImage() {
+    const {src, _initialSrc} = this.getProperties('src', '_initialSrc');
+    if (_initialSrc) {
+      this.set('_src', _initialSrc);
+      run.later(() => {
+        this.set('_background', src);
+      }, this._delaySecondImage);
+    } else {
+      this.set('_src', src);
+    }
+  },
+
+  actions: {
+    loadedBackgroundImage() {
+      this.set('_src', this.get('src'));
+    }
+  }
+
 });
+
+uiImage.reopenClass({
+  positionalParams: ['src']
+});
+
+uiImage[Ember.NAME_KEY] = 'ui-image';
+export default uiImage;
