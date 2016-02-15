@@ -9,6 +9,8 @@ const a = Ember.A; // jshint ignore:line
 export default Ember.Controller.extend({
   aspectConfig: ['default'],
   maskConfig: ['none'],
+  borderConfig: ['none'],
+  border: computed.alias('borderConfig.0'),
   mask: computed.alias('maskConfig.0'),
   actions: {
     onAspectChange(hash) {
@@ -26,6 +28,9 @@ export default Ember.Controller.extend({
     },
     onMaskChange(hash) {
       this.set('maskConfig', hash.values);
+    },
+    onBorderChange(hash) {
+      this.set('borderConfig', hash.values)
     }
   }
 

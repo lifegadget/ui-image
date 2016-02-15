@@ -16,7 +16,7 @@ window.Storage.prototype.getObject = function(key) {
     return value && JSON.parse(value);
 };
 const styleBindings = [
-  'height', 'width', 'maxWidth', 'minWidth', 'maxHeight',
+  'height', 'width', 'maxWidth', 'minWidth', 'maxHeight', 'border',
   'minHeight', 'borderRadius', 'backgroundColor', 'objectFit', 'objectPosition'
 ];
 
@@ -109,8 +109,10 @@ const uiImage = Ember.Component.extend(SharedStylist, {
   }),
   borderRadius: null,
   _mask: observer('mask', function()  {
+    const mask = this.get('mask');
     this.set('borderRadius', null);
-    switch(this.get('mask')) {
+    this.set('clip', null);
+    switch(mask) {
     case 'circle':
       this.set('borderRadius', '50%');
       return;
@@ -118,8 +120,12 @@ const uiImage = Ember.Component.extend(SharedStylist, {
       this.set('borderRadius', '1em');
       return;
     case 'pow':
-      this.set('clipPath', 'pow');
-      return
+    case 'star':
+    case 'cross':
+    case 'left':
+    case 'right':
+      this.set('clip', ` clip-${mask}`);
+      return;
     }
   }),
   _delaySecondImage: 1500,

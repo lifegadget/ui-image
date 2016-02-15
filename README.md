@@ -23,12 +23,12 @@ For more details on the syntax check out the interactive demo:
 
 This may very well work with older version of Ember and Ember-CLI but it was intended for:
 
-- Ember 1.11.0+
-- Ember-CLI 0.2.3+
+- Ember 1.13.11+
+- Ember-CLI 1.13.13+
 
 ## Repo Contribution
 
-We're open to your creative suggestions but please move past the "idea" stage 
+We're open to your creative suggestions but please move past the "idea" stage
 and send us a PR so we can incorporate your ideas without killing ourselves. :)
 
 ## Licensing

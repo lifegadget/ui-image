@@ -1,7 +1,7 @@
 <img
   id="img-{{elementId}}"
   src={{_src}}
-  class="ui-image {{class}}{{if _fromCache ' local-cache'}}{{if (not-eq _aspect naturalAspect) ' aspect-adjusted'}} {{_orientation}}"
+  class="ui-image {{class}}{{if _fromCache ' local-cache'}}{{if (not-eq _aspect naturalAspect) ' aspect-adjusted'}} {{_orientation}}{{clip}}"
   style={{stylist}}
 >
 {{#if _initialSrc}}

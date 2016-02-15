@@ -32,14 +32,14 @@
     clip-path: polygon(30% 0, 0 34%, 30% 50%, 0 69%, 33% 100%, 49% 73%, 66% 100%, 100% 80%, 70% 50%, 100% 25%, 64% 0, 50% 30%);
 }
 .ui-image.clip-left {
-    transition: 1s cubic-bezier(1, -1, 0, 2);
+    /*transition: 1s cubic-bezier(1, -1, 0, 2);*/
     clip-path: polygon(100% 0%, 75% 50%, 100% 100%, 25% 100%, 0% 50%, 25% 0%);
 }
 .ui-image.clip-hover-left:hover {
     clip-path: polygon(100% 0%, 87% 50%, 100% 100%, 13% 99%, 0% 50%, 13% 0);
 }
 .ui-image.clip-right {
-    transition: 1s cubic-bezier(1, -1, 0, 2);
+    /*transition: 1s cubic-bezier(1, -1, 0, 2);*/
     clip-path: polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 25% 50%, 0% 0%);
 }
 .ui-image.clip-hover-right:hover {

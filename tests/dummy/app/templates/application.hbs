@@ -52,6 +52,7 @@
         useSpinner=true
         display=display
         mask=mask
+        border=border
       }}
       <p>
         <br>
@@ -68,22 +69,35 @@
       </p>
       <p class="align-center">
         {{ui-buttons
-          buttons='None,Circle,Rounded,pow,star,cross'
+          buttons='None,circle,rounded,pow,star,cross,left,right'
           cardinality='1:1'
           mood='info'
+          size='small'
           textAlign='center'
           values=maskConfig
           onChange=(action 'onMaskChange')
+        }}
+      </p>
+      <p class="align-center">
+        {{ui-buttons
+          buttons='None,Light Thin::3px lightgrey solid,Light Thick::8px lightgrey solid,Dark Thin::3px black solid,Dark Thick::8px black solid'
+          cardinality='1:1'
+          mood='warning'
+          textAlign='center'
+          values=borderConfig
+          onChange=(action 'onBorderChange')
         }}
       </p>
     </div>
     <div class="col-xs-12">
       {{#ui-markdown style='github'}}
 
-      - If we do want to maintain the aspect ratio but not have the _stretchy_ effect we have a few options that you can play with in the radio buttons to the right. Just set `display` to any of the listed values to get the effect. Some of you may notice that this is really just the CSS `object-fit` property (although "none" → "clip" in `display`); regardless you can use either property (the idea was initially to allow display to perform polyfils for browsers that don't support it but supports getting better and I've got better things to do).
+      If we want to maintain the aspect ratio but not have the _stretchy_ effect we have a few options that you can play with in the radio buttons to the right. Just set `display` to any of the listed values to get the effect. Some of you may notice that this is really just manipulation of the CSS `object-fit` property (although "none" → "clip" in `display`); regardless you can use either property (the idea was initially to allow display to perform polyfils for browsers that don't support it but supports getting better and I've got better things to do).
 
-      ### Masking and Clip Paths
-      This addon gives you a few handy options _masking_ that use a combination of the `clip-path`, `mask`, and the plain old `border-radius`.
+      ### Masks, Clip Paths, and Borders
+      This addon gives you a few handy _mask-like_ effects that use a combination of a number of CSS properties. These are all provided by setting the `mask` property to the button values. If you look at the style properties in the DOM you can see exactly what it's manipulating to create these effects but hopefully this is a good start. You can directly set the styles yourself using camel-cased property names for all of the above.
+
+      There are no "built-in" CSS borders but the `border` style is exposed directly on the API surface and the orange buttons are using this to demonstrate how the various _masks_ interact with a border.
       {{/ui-markdown}}
     </div>
   </div>
@@ -101,46 +115,11 @@
 
       Note the two signatures above. They both produce the same results and in most cases you'll probably want the DRYer syntax provided by the latter one. By default this just adds a "\_init" to the end of the filename to distinquish but if you want a different _postfix_ or a _prefix_ that is possible by changing the `lowResPrefix` and `lowResPostfix` properties respectively. While you could do this on a per instance basis that would quickly get tiring and instead the intended target would to set it in your `environments.js` config file:
 
-
       {{/ui-markdown}}
     </div>
     <div class="col-xs-12 col-md-5">
       {{ui-image 'images/drinking-coffee.jpg' useLowRes=true backgroundColor='#D6D7DA'}}
     </div>
   </div>
-
-
-  <p>&nbsp;</p>
-  <h3 class="col-xs-12">Clipping</h3>
-
-  <examples class="flexy">
-    <columns>
-      <column style="margin: 15px">
-        {{ui-image src=imageSrc borderMask=borderMask size='100%' clip=clip clipHover=clip}}
-    </column>
-    <column>
-      <p>&nbsp;</p>
-      <desc>
-        This is just a first pass at supporting clipping paths. The idea would be to add a few more defaults and then allow easy inline SVG
-        to be added too. For now enjoy the only example I have so far.
-      </desc>
-      <desc>
-          Clipping: {{ui-buttons buttons='pow,cross,left,right,star' value=clip}}
-      </desc>
-      <desc>
-        Of course clipping is not a universal browser sport so best to stay <strikethrough>safe</strikethrough> informed: <a href="http://caniuse.com/#feat=css-clip-path">caniuse</a>.
-      </desc>
-      <codewindow>
-        \{{<strong>ui-image</strong>&nbsp;
-          src='{{imageSrc}}'
-          {{#if useSize}} size='{{explicitSize}}'
-        {{/if}}clip='{{clip}}' clipHover='{{clip}}'
-      }}
-      </codewindow>
-    </column>
-  </columns>
-</examples>
-
-
 
 </div>
