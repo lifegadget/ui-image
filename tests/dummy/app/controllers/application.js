@@ -30,7 +30,7 @@ export default Ember.Controller.extend({
       this.set('maskConfig', hash.values);
     },
     onBorderChange(hash) {
-      this.set('borderConfig', hash.values)
+      this.set('borderConfig', hash.values);
     }
   }
 

@@ -128,7 +128,7 @@ const uiImage = Ember.Component.extend(SharedStylist, {
       return;
     }
   }),
-  _delaySecondImage: 1500,
+  _delaySecondImage: 100,
   fetchImage() {
     const {src, _initialSrc} = this.getProperties('src', '_initialSrc');
     if (_initialSrc) {
