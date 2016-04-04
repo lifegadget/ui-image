@@ -23,8 +23,8 @@ const styleBindings = [
 const uiImage = Ember.Component.extend(SharedStylist, {
   layout: layout,
   tagName: '',
-  init(...args) {
-    this._super(args);
+  init() {
+    this._super(...arguments);
     this.fetchImage();
   },
   srcObserver: observer('src', function() {
