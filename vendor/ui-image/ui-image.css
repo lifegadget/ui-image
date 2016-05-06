@@ -1,6 +1,40 @@
-.ui-image {
-    display: flex;
+.ui-image-container {
+  display: flex;
+  flex: 1 1;
+  width: 100%;
+  height: auto;
 }
+.ui-image {
+  display: flex;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  opacity: 0;
+  animation-fill-mode: both;
+}
+
+.ui-image.ready {
+  opacity: 1;
+}
+.ui-initial-image {
+  display: flex;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 15;
+  opacity: 0;
+  animation-fill-mode: both;
+  /*transition: opacity 1s ease-in-out;*/
+}
+
+.ui-image-height-fixer {
+  display: flex;
+  flex: 1 1;
+}
+
 .ui-image.explicit-dimensions {
     max-width: initial;
 }
@@ -52,4 +86,32 @@
 }
 .ui-image.clip-hover-star:hover {
     clip-path: polygon(50% 0%, 70% 26%, 100% 38%, 80% 64%, 82% 100%, 49% 88%, 18% 100%, 20% 63%, 0% 38%, 29% 26%);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.ui-initial-image.transition-in {
+  animation-name: fadeIn;
+}
+
+.ui-initial-image.transition-out {
+  animation-name: fadeOut;
 }

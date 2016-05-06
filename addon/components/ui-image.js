@@ -17,7 +17,7 @@ window.Storage.prototype.getObject = function(key) {
 };
 const styleBindings = [
   'height', 'width', 'maxWidth', 'minWidth', 'maxHeight', 'border',
-  'minHeight', 'borderRadius', 'backgroundColor', 'objectFit', 'objectPosition'
+  'minHeight', 'borderRadius', 'objectFit', 'objectPosition', 'animationDuration'
 ];
 
 const uiImage = Ember.Component.extend(SharedStylist, {
@@ -44,6 +44,15 @@ const uiImage = Ember.Component.extend(SharedStylist, {
       return Math.floor(naturalWidth / naturalHeight * 1000) / 1000;
     }
   }),
+  height: computed('_aspect','_initialized', {
+    set(_, value) {
+      return value;
+    },
+    get() {
+      const parentWidth = $(`#${get(this, 'elementId')}`).width();
+      return  parentWidth ? parentWidth / this.get('_aspect') : '250px';
+    }
+  }),
   display: null,
   objectFit: computed('display', function() {
     switch (this.get('display')) {
@@ -60,8 +69,6 @@ const uiImage = Ember.Component.extend(SharedStylist, {
     return this.get('_aspect') > 1 ? 'landscape' : 'portrait';
   }),
   useLowRes: false, // allow config to choose initial image
-  useCache: false, // cache using localStorage
-  ttl: '14 days',
   lowResPrefix: '',
   lowResPostfix: '_init',
   styleBindings: styleBindings,
@@ -81,32 +88,18 @@ const uiImage = Ember.Component.extend(SharedStylist, {
   breakpoints: null,
   backgroundColor: '#eeeeee',
   background: computed.alias('backgroundColor'),
-  width: computed('elementId', 'display', 'naturalAspect', {
+  transitionIn: '1s',
+  transitionOut: '0.3s',
+  animationDuration: computed('transitionIn', {
     set(_, value) {
       return value;
     },
     get() {
-      const imageDom = `#img-${this.elementId}`;
-      const $parent = window.$(imageDom).parent();
-      const width = $parent.innerWidth();
+      return this.get('transitionIn');
+    }
+  }),
+  animationName: 'fadeOut',
 
-      this.set('paddingLeft', null);
-      this.set('paddingRight', null);
-      return Math.floor(width * 10) / 10;
-    }
-  }),
-  height: computed('elementId',{
-    set(_, value) {
-      return value;
-    },
-    get() {
-      const imageDom = `#img-${this.elementId}`;
-      const $parent = window.$(imageDom).parent();
-      const width = $parent.width();
-      const aspect = this.get('_aspect');
-      return Math.floor(width * (1 / aspect) * 10) / 10;
-    }
-  }),
   borderRadius: null,
   _mask: observer('mask', function()  {
     const mask = this.get('mask');
@@ -132,7 +125,7 @@ const uiImage = Ember.Component.extend(SharedStylist, {
   fetchImage() {
     const {src, _initialSrc} = this.getProperties('src', '_initialSrc');
     if (_initialSrc) {
-      this.set('_src', _initialSrc);
+      // this.set('_src', _initialSrc);
       run.later(() => {
         this.set('_background', src);
       }, this._delaySecondImage);
@@ -142,8 +135,14 @@ const uiImage = Ember.Component.extend(SharedStylist, {
   },
 
   actions: {
-    loadedBackgroundImage() {
-      this.set('_src', this.get('src'));
+    loadedInitialImage() {
+      $(`#init-img-${this.elementId}`).addClass('transition-in');
+      this.set('animationDuration', this.get('transitionOut'));
+    },
+    loadedFinalImage() {
+      $(`#img-${this.elementId}`).addClass('ready');
+      $(`#init-img-${this.elementId}`).removeClass('transition-in');
+      $(`#init-img-${this.elementId}`).addClass('transition-out');
     }
   }
 

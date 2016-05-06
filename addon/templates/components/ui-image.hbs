@@ -1,10 +1,22 @@
-<img
-  id="img-{{elementId}}"
-  src={{_src}}
-  class="ui-image {{class}}{{if _fromCache ' local-cache'}}{{if (not-eq _aspect naturalAspect) ' aspect-adjusted'}} {{_orientation}}{{clip}}"
-  style={{stylist}}
->
-{{#if _initialSrc}}
-  <img src={{_background}} data-replace="img-{{elementId}}" style="display:none" onload={{action 'loadedBackgroundImage'}}>
-{{/if}}
-{{yield}}
+<div id={{elementId}} class="ui-image-container {{_orientation}} {{class}}" style="background-color: {{backgroundColor}};">
+  {{#if _initialSrc}}
+    <img
+      id="init-img-{{elementId}}"
+      src={{_initialSrc}}
+      data-replace="img-{{elementId}}"
+      class='ui-initial-image'
+      style={{stylist}}
+      onload={{action 'loadedInitialImage'}}
+    >
+  {{/if}}
+  <img
+    id="img-{{elementId}}"
+    src={{src}}
+    class="ui-image {{class}}{{if (not-eq _aspect naturalAspect) ' aspect-adjusted'}} {{_orientation}}{{clip}}"
+    style={{stylist}}
+    onload={{action 'loadedFinalImage'}}
+  >
+  <div class="ui-image-height-fixer" style={{stylist}}></div>
+
+  {{yield}}
+</div>
