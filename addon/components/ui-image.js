@@ -17,7 +17,8 @@ window.Storage.prototype.getObject = function(key) {
 };
 const styleBindings = [
   'height', 'width', 'maxWidth', 'minWidth', 'maxHeight', 'border',
-  'minHeight', 'borderRadius', 'objectFit', 'objectPosition', 'animationDuration'
+  'minHeight', 'borderRadius', 'objectFit', 'objectPosition', 'animationDuration',
+  'zIndex'
 ];
 
 const uiImage = Ember.Component.extend(SharedStylist, {
@@ -25,11 +26,7 @@ const uiImage = Ember.Component.extend(SharedStylist, {
   tagName: '',
   init() {
     this._super(...arguments);
-    this.fetchImage();
   },
-  srcObserver: observer('src', function() {
-    this.fetchImage();
-  }),
 
   aspect: null,
   _aspect: computed('aspect', function() {
@@ -121,19 +118,6 @@ const uiImage = Ember.Component.extend(SharedStylist, {
       return;
     }
   }),
-  _delaySecondImage: 100,
-  fetchImage() {
-    const {src, _initialSrc} = this.getProperties('src', '_initialSrc');
-    if (_initialSrc) {
-      // this.set('_src', _initialSrc);
-      run.later(() => {
-        this.set('_background', src);
-      }, this._delaySecondImage);
-    } else {
-      this.set('_src', src);
-    }
-  },
-
   actions: {
     loadedInitialImage() {
       $(`#init-img-${this.elementId}`).addClass('transition-in');
