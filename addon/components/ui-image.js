@@ -63,7 +63,7 @@ const uiImage = Ember.Component.extend(SharedStylist, {
     }
   }),
   _orientation: computed('_aspect', function() {
-    return this.get('_aspect') > 1 ? 'landscape' : 'portrait';
+    return this.get('_aspect') > 1 ? 'landscape-image' : 'portrait-image';
   }),
   useLowRes: false, // allow config to choose initial image
   lowResPrefix: '',
@@ -127,7 +127,11 @@ const uiImage = Ember.Component.extend(SharedStylist, {
       $(`#img-${this.elementId}`).addClass('ready');
       $(`#init-img-${this.elementId}`).removeClass('transition-in');
       $(`#init-img-${this.elementId}`).addClass('transition-out');
-    }
+      run.later(() => {
+        $(`#init-img-${this.elementId}`).removeClass('transition-out');
+        this.set('animationDuration', null);
+      }, 3000);
+    },
   }
 
 });

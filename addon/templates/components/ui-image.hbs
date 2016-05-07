@@ -16,7 +16,8 @@
     style={{stylist}}
     onload={{action 'loadedFinalImage'}}
   >
-  <div class="ui-image-height-fixer" style={{stylist}}></div>
+  <div class="ui-image-height-fixer" style={{stylist}}>
+    {{yield}}
+  </div>
 
-  {{yield}}
 </div>
