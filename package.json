@@ -1,6 +1,6 @@
 {
   "name": "ui-image",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Optimised image loading for Ember apps",
   "directories": {
     "doc": "doc",

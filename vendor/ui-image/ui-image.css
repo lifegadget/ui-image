@@ -1,15 +1,13 @@
 .ui-image-container {
   display: flex;
-  flex: 1 1;
+  position:relative;
+  flex: 0 0;
   width: 100%;
   height: auto;
 }
 .ui-image {
   display: flex;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
+  flex: 1 0;
   opacity: 0;
   animation-fill-mode: both;
 }
@@ -20,7 +18,7 @@
 .ui-initial-image {
   display: flex;
   width: 100%;
-  position: absolute;
+  position:absolute;
   top: 0;
   left: 0;
   opacity: 0;

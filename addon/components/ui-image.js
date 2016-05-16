@@ -83,7 +83,7 @@ const uiImage = Ember.Component.extend(SharedStylist, {
     }
   }),
   breakpoints: null,
-  backgroundColor: '#eeeeee',
+  backgroundColor: '',
   background: computed.alias('backgroundColor'),
   transitionIn: '1s',
   transitionOut: '0.3s',
