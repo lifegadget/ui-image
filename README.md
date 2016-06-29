@@ -17,7 +17,7 @@
 ## Usage ##
 For more details on the syntax check out the interactive demo:
 
-> [online demo](http://development.ui-image.divshot.io)
+> [online demo](https://ui-image.firebaseapp.com/)
 
 ## Version Compatibility
 
