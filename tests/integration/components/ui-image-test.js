@@ -11,7 +11,7 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{ui-image}}`);
 
-  assert.equal(this.$().text().trim(), '');
+  assert.equal(this.$('img').length, 1);
 
   // Template block usage:"
   this.render(hbs`
@@ -20,5 +20,5 @@ test('it renders', function(assert) {
     {{/ui-image}}
   `);
 
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.equal(this.$('img').length, 1);
 });
