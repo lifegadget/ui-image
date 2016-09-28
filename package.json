@@ -56,7 +56,7 @@
     "loader.js": "^4.0.0",
     "moment": "2.11.2",
     "moment-timezone": "0.5.5",
-    "ui-button": "2.0.0",
+    "ui-button": "2.0.1",
     "ui-icon": "0.11.5",
     "ui-markdown": "0.1.10"
   },
